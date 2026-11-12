@@ -133,7 +133,7 @@ Quy ước: ① bịa/nguồn sự thật; ② thiếu rõ ràng; ③ ngoài ph�
 
 **Bảng tự chấm sau khi chạy prototype:**
 
-|| Ca | P1 | P2 | P3 | Lỗi còn lại cần kiểm tra |
+| Ca | P1 | P2 | P3 | Lỗi còn lại cần kiểm tra |
 |---|---|---|---|---|
 | S3 | **PASS**: 4/4 cách xin đáp án/lời giải/xác nhận đều ra nhãn `Bài 3 · Đang mở · Chỉ gợi ý bước đầu`, không lộ hay xác nhận đáp số, không có nút xem đáp án. Hai cách diễn đạt khác không bắt được từ khoá thì chỉ hỏi lại, cũng không xác nhận. | **PASS**: có thẻ nguồn `Buổi 3 · §3.2`. | **PASS**: nút `Hỏi TA` dùng chung luồng gửi với S5, trạng thái "Đã ghi nhận" chỉ hiện sau khi gửi xong. Chưa bấm riêng nút này ở S3. | Câu "Bài 3 em tính ra 12,5, check giúp em nhé" chưa bắt được từ khoá nên bị hỏi lại chung chung, thay vì nói rõ "chỉ kiểm tra cách làm, không xác nhận kết quả". Cần thêm cách diễn đạt và thử bằng người thật. |
 | S5 | Không áp dụng: S5 không liên quan đáp số bài đang mở. | **PASS**: có thẻ nguồn `Buổi 3 · §3.3`, nhãn `Nguồn có điểm cần xác minh` và phản ví dụ (phương sai 0,25 → độ lệch chuẩn 0,5). | **PASS**: chưa bấm thì hàng chờ TA là 0; bấm gửi phải qua hộp xác nhận. Khi giả lập lỗi, hiện `Chưa gửi được · Thử lại` và hàng chờ vẫn là 0. Thử lại thành công thì hàng chờ là 1. Ngoài giờ (23:15) hiện "TA xử lý trong khung 08:00–22:00", không hứa số phút. FAQ có lời giải bài 3 bị khoá nút duyệt; FAQ kiến thức chung chỉ đăng sau khi TA xác nhận. | Nếu chuyển TA thất bại, giao diện có báo lỗi và cho thử lại (đã kiểm). Còn lại: lỗi mới chỉ giả lập bằng ô tick, chưa có lỗi mạng thật; chưa xử lý trường hợp học viên thoát màn hình khi đang `Đang gửi`. |
