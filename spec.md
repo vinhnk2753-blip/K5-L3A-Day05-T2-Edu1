@@ -178,7 +178,7 @@ Phản hồi được chọn bằng từ khoá, các công cụ, gửi yêu cầ
 4. **Giải thích mức tự chủ:** vì sao `goi_y_bai_tap` có rào chắn và `dang_FAQ` cần TA duyệt; chi phí sai và khả năng đảo lại.
 5. **Ca lạ:** nhận câu hỏi thực tế từ TA/giảng viên và giải thích/bấm cách prototype xử lý theo đúng các mức đã đặt.
 
-**Phân công trình bày đề xuất:** Trần Thị Lý giới thiệu lát cắt và chọn ca, Trần Việt Tiến trình bày UX ca S5, Nguyễn Thuỳ Dương giải thích mức tự chủ, Nguyễn Khánh Vinh thao tác prototype và tiêu chí đánh giá. Danh sách 4 thành viên đã được giảng viên chấp thuận. Nhóm xác nhận phân công trình bày theo đóng góp thực tế.
+**Phân công trình bày đề xuất:** Trần Thị Lý giới thiệu lát cắt và chọn ca, Trần Việt Tiến trình bày UX ca S5, Nguyễn Thuỳ Dương giải thích mức tự chủ, Nguyễn Khánh Vinh thao tác prototype và tiêu chí đánh giá. Nhóm xác nhận phân công trình bày theo đóng góp thực tế.
 
 **Kết quả demo:** chưa có ca lạ thực nhận. Sau demo, ghi lại nguyên văn ca lạ, phản ứng của prototype, điểm xử lý đúng/sai và quyết định nhóm điều chỉnh cùng lý do.
 
