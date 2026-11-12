@@ -14,8 +14,6 @@
 | 4 | Nguyễn Khánh Vinh | 2A202603390 | §5–§6: prototype, minh chứng và tiêu chí Pass/Fail |
 
 
-> Nhóm Edu1 gồm 4 thành viên, đã được giảng viên đồng ý.
-
 ## §1. Lát cắt & phạm vi
 
 **Lát cắt:** Trong **trợ lý học bài của trang khoá học (kiểu ChatGPT Study mode)**, khi **học viên** đang hỏi bài lúc tối muộn, khi không còn ai để hỏi, **AI giảng kèm trích tài liệu, hỏi lại cho rõ, gợi ý từng bước, hay nói thẳng "tài liệu không có, hỏi giảng viên"**, để học viên hiểu đúng bài mình đang học, không chép đáp án, không học sai mà không biết.
