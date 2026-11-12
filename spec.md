@@ -1,15 +1,15 @@
-# Bài nộp LAB5 — T2 Giáo dục · Nhóm [Tên nhóm]
+# Bài nộp LAB5 — T2 · Nhóm Edu1
 
 > **Trạng thái:** Bản thiết kế đề xuất. Cần bổ sung tên nhóm, xác nhận nhóm 4 người với giảng viên, ảnh prototype, kết quả thử thực tế và ca lạ trong demo.
 
 ## Thành viên và phân công
 
-| STT | Họ và tên | Mã học viên | Công việc |
+| STT | Họ và tên | Mã học viên | Việc cần làm |
 |---|---|---|---|
 | 1 | Trần Thị Lý | 2A202603404 | §1–§2: lát cắt, phạm vi, 8 kịch bản và lập luận chọn ca |
-| 2 | Nguyễn Thị Hương Giang | 2A202603538 | §3: thiết kế UX khi AI sai, thông điệp và nguyên tắc HAX/PAIR |
+| 2 | Trần Việt Tiến | 2A202603394 | §3: thiết kế UX khi AI sai, thông điệp và nguyên tắc HAX/PAIR |
 | 3 | Nguyễn Thuỳ Dương | 2A202603388 | §4: mức tự chủ, cost-of-error và kiểm thử quyết định |
-| 4 | Nguyễn Quỳnh Trang | 2A202603477 | §5–§6: prototype, minh chứng và tiêu chí Pass/Fail |
+| 4 | Nguyễn Khánh Vinh | 2A202603390 | §5–§6: prototype, minh chứng và tiêu chí Pass/Fail |
 
 > Phân công trên là **đề xuất** dựa trên danh sách nhóm đã cung cấp trước đây; xác nhận lại thành viên Day 05 và đóng góp thực tế trước khi nộp. Đề chung yêu cầu 3 người/nhóm, cần được giảng viên chấp thuận nếu nộp 4 người.
 
@@ -111,17 +111,17 @@ Quy ước: ① bịa/nguồn sự thật; ② thiếu rõ ràng; ③ ngoài ph�
 
 > **Cần cập nhật sau khi nhóm thực sự làm prototype.** Không ghi đã có link, ảnh hoặc lời gọi AI thật khi chưa có.
 
-- **Đường dẫn dự kiến:** `prototype/index.html` 
+- **Đường dẫn dự kiến:** `prototype/index.html` (thay bằng link thật nếu dùng Figma/Lovable).
 - **Công cụ dự kiến:** HTML/CSS/JavaScript; dữ liệu giả lập từ track T2, không backend, không đăng nhập.
 - **Mock:** phản hồi mẫu, tài liệu buổi 3, trạng thái bài 3, hàng chờ TA, xác nhận gửi và duyệt FAQ. Các trạng thái “đã ghi nhận” chỉ là mô phỏng trong prototype, không gửi yêu cầu thật.
-- **Lời gọi AI thật:** Chưa có. 
+- **Lời gọi AI thật:** Chưa có. Nếu bổ sung cần có log/ảnh và không lộ API key.
 
-**Thiết kế 2 màn hình:**
+**Thiết kế 2 màn hình dự kiến:**
 
 1. **Màn hình học viên:** chọn S3/S5 hoặc nhập câu hỏi; thấy [1] thẻ trích nguồn §3.2/§3.3 (**G11**, `tra_cuu_tai_lieu` tự làm); [2] nhãn “Chỉ gợi ý bước đầu”/“Nguồn cần xác minh” (**G10**, rào chắn `goi_y_bai_tap`); [3] nút gửi TA có hộp xác nhận và trạng thái kết quả (**G9**, `chuyen_TA` sau xác nhận).
 2. **Màn hình TA:** hàng chờ yêu cầu nguồn §3.3 và bản nháp FAQ; thấy nguồn, lý do nghi sai, trạng thái bài; nút `Duyệt & đăng` chỉ xuất hiện cho nội dung đủ điều kiện (**G9/G11**, `dang_FAQ` cần duyệt).
 
-**Ảnh cần nộp:** `prototype/screen-1.png` đánh số [1]–[3]; `prototype/screen-2.png` đánh số [4] hàng chờ TA, [5] xác nhận duyệt. 
+**Ảnh cần nộp:** `prototype/screen-1.png` đánh số [1]–[3]; `prototype/screen-2.png` đánh số [4] hàng chờ TA, [5] xác nhận duyệt. **Chưa tạo ảnh**; chỉ cập nhật tên file sau khi ảnh thực sự tồn tại.
 
 **Quyết định hiển thị:** chọn **mã mục + nhãn trạng thái + nút hành động cụ thể** thay vì một thanh “AI tự tin 87%” (không có dữ liệu hiệu chuẩn, dễ tạo tin tưởng giả). Loại cách chỉ viết cảnh báo trong đoạn chat vì người học có thể bỏ qua và nút gửi/duyệt vẫn cho phép hành động sai. Khi demo, bấm S5 → xem nguồn/cảnh báo → gửi TA → mở hàng chờ TA; bấm S3 → thấy giới hạn và gợi ý bước đầu, không có đáp án.
 
@@ -137,8 +137,8 @@ Quy ước: ① bịa/nguồn sự thật; ② thiếu rõ ràng; ③ ngoài ph�
 
 | Ca | P1 | P2 | P3 | Lỗi còn lại cần kiểm tra |
 |---|---|---|---|---|
-| S3 | **PASS**: 4/4 cách xin đáp án/lời giải/xác nhận đều ra nhãn `Bài 3 · Đang mở · Chỉ gợi ý bước đầu`, không lộ hay xác nhận đáp số, không có nút xem đáp án. Hai cách diễn đạt khác không bắt được từ khoá thì chỉ hỏi lại, cũng không xác nhận. | **PASS**: có thẻ nguồn `Buổi 3 · §3.2`. | **PASS**: nút `Hỏi TA` dùng chung luồng gửi với S5, trạng thái "Đã ghi nhận" chỉ hiện sau khi gửi xong. Chưa bấm riêng nút này ở S3. | Câu "Bài 3 em tính ra 12,5, check giúp em nhé" chưa bắt được từ khoá nên bị hỏi lại chung chung, thay vì nói rõ "chỉ kiểm tra cách làm, không xác nhận kết quả". Cần thêm cách diễn đạt và thử bằng người thật. |
-| S5 | Không áp dụng: S5 không liên quan đáp số bài đang mở. | **PASS**: có thẻ nguồn `Buổi 3 · §3.3`, nhãn `Nguồn có điểm cần xác minh` và phản ví dụ (phương sai 0,25 → độ lệch chuẩn 0,5). | **PASS**: chưa bấm thì hàng chờ TA là 0; bấm gửi phải qua hộp xác nhận. Khi giả lập lỗi, hiện `Chưa gửi được · Thử lại` và hàng chờ vẫn là 0. Thử lại thành công thì hàng chờ là 1. Ngoài giờ (23:15) hiện "TA xử lý trong khung 08:00–22:00", không hứa số phút. FAQ có lời giải bài 3 bị khoá nút duyệt; FAQ kiến thức chung chỉ đăng sau khi TA xác nhận. | Nếu chuyển TA thất bại, giao diện có báo lỗi và cho thử lại (đã kiểm). Còn lại: lỗi mới chỉ giả lập bằng ô tick, chưa có lỗi mạng thật; chưa xử lý trường hợp học viên thoát màn hình khi đang `Đang gửi`. |
+| S3 | Chưa chạy | Chưa chạy | Chưa chạy | Người học thử yêu cầu xác nhận đáp số bằng cách diễn đạt khác. |
+| S5 | Chưa chạy | Chưa chạy | Chưa chạy | Nếu chuyển TA thất bại, giao diện có báo thất bại và cho thử lại không? |
 
 ## §7. Demo
 
