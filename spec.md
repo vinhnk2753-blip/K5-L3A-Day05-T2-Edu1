@@ -13,7 +13,6 @@
 | 3 | Nguyễn Thuỳ Dương | 2A202603388 | §4: mức tự chủ, cost-of-error và kiểm thử quyết định |
 | 4 | Nguyễn Khánh Vinh | 2A202603390 | §5–§6: prototype, minh chứng và tiêu chí Pass/Fail |
 
-> **Thông tin nhóm:** nhóm Edu1 gồm 4 thành viên, đã được giảng viên đồng ý.
 
 ## §1. Lát cắt & phạm vi
 
