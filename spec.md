@@ -16,7 +16,7 @@
 
 ## §1. Lát cắt & phạm vi
 
-**Lát cắt (nguyên văn track T2):** Trong **trợ lý học bài của trang khoá học (kiểu ChatGPT Study mode)**, khi **học viên** đang hỏi bài lúc tối muộn, khi không còn ai để hỏi, **AI giảng kèm trích tài liệu, hỏi lại cho rõ, gợi ý từng bước, hay nói thẳng "tài liệu không có, hỏi giảng viên"**, để học viên hiểu đúng bài mình đang học, không chép đáp án, không học sai mà không biết.
+**Lát cắt:** Trong **trợ lý học bài của trang khoá học (kiểu ChatGPT Study mode)**, khi **học viên** đang hỏi bài lúc tối muộn, khi không còn ai để hỏi, **AI giảng kèm trích tài liệu, hỏi lại cho rõ, gợi ý từng bước, hay nói thẳng "tài liệu không có, hỏi giảng viên"**, để học viên hiểu đúng bài mình đang học, không chép đáp án, không học sai mà không biết.
 
 - **Sản phẩm nền:** Study mode hỏi ngược, gợi ý từng bước; bản tích hợp mới có tài liệu theo buổi, hạn bài tập và công cụ chuyển TA. Học viên chỉ truy cập nội dung buổi 1–3 đã mở.
 - **Quyết định AI cần đưa ra:** Có đủ căn cứ để giải thích không? Bài còn mở hay đã công bố đáp án? Nên hướng dẫn bước đầu, hỏi lại, nêu giới hạn hay chuyển TA?
