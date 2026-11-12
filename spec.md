@@ -8,11 +8,13 @@
 
 | STT | Họ và tên | Mã học viên | Việc cần làm |
 |---|---|---|---|
-| 1 | Trần Thị Lý | 2A202603404 | §1–§2: lát cắt, phạm vi, 8 kịch bản và lập luận chọn ca |
+| 1 | Trần Thị Lý | 2A202603404 | §1–§2: lát cắt, phạm vi, 10 kịch bản và lập luận chọn ca |
 | 2 | Trần Việt Tiến | 2A202603394 | §3: thiết kế UX khi AI sai, thông điệp và nguyên tắc HAX/PAIR |
 | 3 | Nguyễn Thuỳ Dương | 2A202603388 | §4: mức tự chủ, cost-of-error và kiểm thử quyết định |
 | 4 | Nguyễn Khánh Vinh | 2A202603390 | §5–§6: prototype, minh chứng và tiêu chí Pass/Fail |
 
+
+> Nhóm Edu1 gồm 4 thành viên, đã được giảng viên đồng ý.
 
 ## §1. Lát cắt & phạm vi
 
@@ -87,7 +89,7 @@ Quy ước: ① bịa/nguồn sự thật; ② thiếu rõ ràng; ③ ngoài ph�
 
 1. **G11 — Giải thích vì sao / PAIR Explainability + Trust:** thẻ nguồn `§3.2` ở S3 giải thích căn cứ của gợi ý; trích đoạn `§3.3` và phản ví dụ ở S5 giải thích vì sao nguồn cần kiểm tra. Người học mở được đoạn liên quan; **vị trí [1] trên ảnh 1** minh chứng nguồn của ca S5.
 2. **G10 — Thu hẹp phạm vi khi nghi ngờ / PAIR Graceful Failure:** S3 chỉ gửi gợi ý bước đầu theo trạng thái bài; S5 khoanh đúng câu sai, đưa phản ví dụ và đề nghị TA kiểm tra; S2 hỏi lại trước khi giải thích. Các hành vi này đi cùng nhãn `Chỉ gợi ý bước đầu` hoặc `Nguồn cần xác minh`; **vị trí [2] trên ảnh 1** minh chứng ca S5.
-3. **G9 — Sửa dễ dàng:** nút `Báo câu trả lời sai` mở luồng đính chính, hiển thị phản hồi cũ và phần sửa kèm căn cứ. Nút `Gửi TA kiểm tra` có bước xem trước, xác nhận và thử lại nếu lỗi. Trạng thái gửi gắn với kết quả thao tác mô phỏng; **vị trí [3] trên ảnh 1** minh chứng nút chuyển TA. Luồng báo sai và đính chính là thiết kế chưa triển khai trong bản hiện tại, được ghi rõ tại §5.
+3. **G9 — Sửa dễ dàng:** nút `Báo câu trả lời sai` mở luồng đính chính, hiển thị phản hồi cũ và phần sửa kèm căn cứ. Nút `Gửi TA kiểm tra` có bước xem trước, xác nhận và thử lại nếu lỗi. Trạng thái gửi gắn với kết quả thao tác mô phỏng; **vị trí [6] trên ảnh 1** là nút báo sai và phần đính chính, giữ nguyên phản hồi cũ để đối chiếu. **[3]** là nút chuyển TA sau khi học viên xem trước và xác nhận.
 
 **Lỗi không thể cứu bằng câu chữ:** Nếu hệ thống đã gọi `goi_y_bai_tap` với lời giải đầy đủ, học viên đã nhìn thấy thì xin lỗi cũng không thu hồi được. Thiết kế cần **chặn nội dung đáp án trước khi gửi** bằng luật bài đang mở; đồng thời `dang_FAQ` bắt buộc TA duyệt. Tương tự, ghi “đã báo TA” không thể thay cho việc `chuyen_TA` thành công: trạng thái phải gắn với kết quả tool.
 
@@ -102,7 +104,18 @@ Quy ước: ① bịa/nguồn sự thật; ② thiếu rõ ràng; ③ ngoài ph�
 
 **Cơ chế duyệt `dang_FAQ`:** AI chỉ **soạn bản nháp**; TA nhìn thấy nội dung, mã mục, tình trạng bài tập và cảnh báo trước khi bấm `Duyệt & đăng`. Nếu chưa duyệt, bản nháp giữ ở hàng chờ, **không đăng tự động khi quá hạn**. Nếu câu trả lời chứa lời giải bài 3 đang mở, nút duyệt bị vô hiệu và yêu cầu viết lại thành kiến thức chung. Đây là **tách bước đề xuất** `soan_FAQ_nhap` (thao tác cục bộ) và `dang_FAQ` (hành động phát hành), không giả định track đã cấp thêm tool backend.
 
-**Tool khó xếp nhất là `goi_y_bai_tap`.** Bảng dưới trình bày các phương án thiết kế và cái giá của từng lựa chọn. Ghi nhận mỗi thành viên từng chọn mức nào còn cần nhóm xác nhận trước khi nộp.
+**Tool khó xếp nhất là `goi_y_bai_tap`.** Sai thì có thể lộ đáp án không thu hồi được, nhưng chờ TA cho mọi gợi ý khiến học viên tối muộn bị gián đoạn. Bảng dưới trình bày các phương án thiết kế và cái giá của từng lựa chọn.
+
+**Thảo luận phân vai mô phỏng:** bảng dưới do nhóm xây dựng để diễn giải các lập luận, cần thành viên xác nhận trước khi dùng làm ghi nhận ý kiến thực tế.
+
+| Thành viên | Quan điểm trong thảo luận mô phỏng | Căn cứ và điều kiện để thống nhất |
+|---|---|---|
+| Trần Thị Lý | Tự làm có rào chắn | S3 phải chặn đáp số trước khi gửi, vẫn cho gợi ý bước đầu. |
+| Trần Việt Tiến | Cần TA duyệt mọi gợi ý | Lo S3/S4 làm lộ hoặc xác nhận đáp số. Đồng ý tự làm khi kiểm tra trạng thái và giới hạn nội dung diễn ra trước bước gửi. |
+| Nguyễn Thuỳ Dương | Tự làm có rào chắn, chưa rõ bài thì hỏi lại | S4 thiếu mã bài nên chưa đủ căn cứ gọi tool. |
+| Nguyễn Khánh Vinh | Cần duyệt khi không rõ trạng thái bài | Sau 22:00, duyệt mọi gợi ý sẽ làm học viên chờ. Đồng ý cho gợi ý bước đầu khi trạng thái bài được xác định. |
+
+**Quyết định thiết kế:** tự làm có rào chắn với trạng thái bài rõ ràng. Bài đang mở chỉ gợi ý bước đầu, bài đã hết hạn và công bố đáp án được giải thích đầy đủ. Thiếu thông tin thì hỏi lại hoặc chuyển TA sau xác nhận. Quyết định này cân bằng việc hỗ trợ kịp thời với rủi ro S3/S4.
 
 | Quan điểm | Lợi ích | Cái giá |
 |---|---|---|
@@ -133,20 +146,21 @@ Phản hồi được chọn bằng từ khoá, các công cụ, gửi yêu cầ
 
 ![Màn hình học viên với cảnh báo nguồn và gửi TA](prototype/screen-1.png)
 
-**Ảnh 1:** ca S5, giờ giả lập 23:15. **[1]** là nguồn §3.3 mở ra câu nghi sai, thể hiện G11 và `tra_cuu_tai_lieu` tự làm. **[2]** là nhãn nguồn cần xác minh, đi cùng phản ví dụ và giới hạn xử lý, thể hiện G10. **[3]** là nút gửi TA, thể hiện đường khắc phục của PAIR Errors + Graceful Failure và `chuyen_TA` cần học viên duyệt. Nhật ký ghi rõ chưa gọi khi chưa xác nhận. Ảnh có bật giả lập lỗi nhưng đang ở trước bước gửi, chưa chứng minh kết quả lỗi/thử lại.
+**Ảnh 1:** ca S5, giờ giả lập 23:15. **[1]** là nguồn §3.3 mở ra câu nghi sai, thể hiện G11 và `tra_cuu_tai_lieu` tự làm. **[2]** là nhãn nguồn cần xác minh cùng phản ví dụ, thể hiện G10. **[3]** là nút gửi TA, thể hiện `chuyen_TA` cần học viên duyệt. **[6]** là nút báo sai, bên dưới có bản đính chính và phản hồi học viên, thể hiện G9. Nhật ký ghi nhận phản hồi cục bộ và chưa gửi TA khi chưa xác nhận.
 
 ![Màn hình TA với hàng chờ và xác nhận đăng FAQ](prototype/screen-2.png)
 
-**Ảnh 2:** **[4]** là hàng chờ chứa câu hỏi S5, mã mục, lý do và phản ví dụ, thể hiện đường chuyển người của PAIR. **[5]** là hộp xác nhận đăng FAQ, có cảnh báo hệ quả và nút huỷ, thể hiện G11 và `dang_FAQ` cần TA duyệt. Ảnh có một yêu cầu đã được đánh dấu xem. Mã HTML vô hiệu nút duyệt của bản nháp lời giải bài 3 đang mở.
+**Ảnh 2:** **[4]** là hàng chờ chứa câu hỏi S5, mã mục, lý do và phản ví dụ, thể hiện đường chuyển người của PAIR. **[5]** là hộp xác nhận đăng FAQ, có cảnh báo hệ quả và nút huỷ, thể hiện G11 và `dang_FAQ` cần TA duyệt. Ảnh có một yêu cầu chờ TA xem, có thể mở nguồn, phản hồi AI và hạn nộp. Mã HTML vô hiệu nút duyệt của bản nháp lời giải bài 3 đang mở.
 
-**Các điểm còn lệch với thiết kế và cần hoàn thiện:**
+### Chức năng đã kiểm tra
 
-- G9 ở §3 mô tả nút “Báo câu trả lời sai”, giữ phản hồi cũ và phần đính chính. HTML hiện chưa có luồng này, nên hai ảnh chưa minh chứng đầy đủ G9 như đã thiết kế.
-- S2 chọn “Phương sai” hoặc “Giá trị ngoại lai” đang trả lời về trung bình/trung vị do nhánh xử lý trong `ask`. Cần sửa đúng chủ đề trước khi demo các lựa chọn này.
-- Bản nháp FAQ hiện chỉ có tiêu đề và mô tả ngắn, chưa có câu trả lời đầy đủ để TA kiểm tra. Chặn lời giải dựa trên cờ `leak` của dữ liệu dựng, chưa kiểm tra nội dung bất kỳ.
-- Gói chuyển TA của S3 chưa chứa toàn văn gợi ý AI và hạn nộp như §3. S5 có mục nguồn và lý do kèm phản ví dụ, chưa có trường riêng chứa nguyên văn câu nguồn nghi sai.
-- Mã gửi TA chưa chặn gửi trùng. Tác vụ trễ chưa được huỷ khi đặt lại demo, cần kiểm tra đặt lại lúc đang gửi.
-- Nhận diện ca lạ dựa trên từ khoá, câu ghép nhiều ý có thể bị xếp nhầm. Chưa có kết quả demo ca lạ để xác nhận.
+- S3/S4 chỉ đưa gợi ý bước đầu cho bài đang mở. Câu hỏi ghép yêu cầu giải bài và hỏi hạn nộp được ưu tiên bảo vệ bài đang mở.
+- S2 làm rõ khái niệm, lựa chọn phương sai/ngoại lai trả đúng chủ đề kèm nguồn §3.3/§3.4. Phương sai và độ lệch chuẩn đều giữ cảnh báo câu sai trong nguồn.
+- Nút “Báo câu trả lời sai” thu nhận phản hồi tại chỗ. Ca lỗi nguồn §3.3 có bản đính chính bằng phản ví dụ, giữ phản hồi cũ và cảnh báo nguồn. Nội dung chưa đủ căn cứ được đề nghị chuyển TA.
+- Gửi TA cần xem trước câu hỏi, mã mục, trích đoạn nguồn, phản hồi AI, lý do, trạng thái bài và hạn nộp. Huỷ thì chưa tạo yêu cầu, gửi lỗi cho thử lại, một yêu cầu gửi thành công được chặn gửi lại. Đặt lại demo huỷ hiệu lực tác vụ đang chờ.
+- FAQ kiến thức chung có nội dung đầy đủ, mã nguồn và trạng thái bài cho TA kiểm tra. Hộp duyệt nhắc lại nội dung và hệ quả. Huỷ giữ bản nháp, xác nhận mới đăng. Yêu cầu lời giải bài đang mở bị chặn trước khi tạo nội dung.
+
+**Giới hạn:** nhận diện câu hỏi, đính chính và chặn FAQ dùng kịch bản dựng, từ khoá và cờ dữ liệu, cần mở rộng trước khi áp dụng cho nội dung bất kỳ. Chưa có lời gọi AI thật, chưa có lưu trữ lâu dài. Hai màn hình TA/học viên là mô phỏng vai trò trong một phiên. Ca lạ trong §7 là kiểm thử nội bộ, chưa phải demo do giảng viên đưa tại lớp.
 
 **Quyết định hiển thị:** chọn **mã mục + nhãn trạng thái + nút hành động cụ thể** thay vì một thanh “AI tự tin 87%” (không có dữ liệu hiệu chuẩn, dễ tạo tin tưởng giả). Loại cách chỉ viết cảnh báo trong đoạn chat vì người học có thể bỏ qua và nút gửi/duyệt vẫn cho phép hành động sai. Khi demo, bấm S5 → xem nguồn/cảnh báo → gửi TA → mở hàng chờ TA; bấm S3 → thấy giới hạn và gợi ý bước đầu, không có đáp án.
 
@@ -160,14 +174,23 @@ Phản hồi được chọn bằng từ khoá, các công cụ, gửi yêu cầ
 
 ### Tự đánh giá trên hai ca chính
 
-**Phương pháp:** đọc mã HTML và đối chiếu hai ảnh minh chứng. Kết quả dưới đây đánh giá thiết kế trên kịch bản dựng, chưa thay cho kiểm thử bấm trực tiếp toàn bộ luồng.
+**Phương pháp:** kiểm thử tự động qua giao diện trên Microsoft Edge bằng Playwright, kết hợp đọc mã và kiểm tra ảnh chụp mới. Đã kiểm tra 8 nhóm tình huống, không ghi nhận lỗi JavaScript trong phiên kiểm thử.
 
-| Ca | P1 | P2 | P3 | Bằng chứng và giới hạn |
+| Ca | P1 | P2 | P3 | Bằng chứng quan sát |
 |---|---|---|---|---|
-| S3 | Đạt khi đối chiếu mã phản hồi S3/S4 | Đạt với phản hồi S3 có nguồn §3.2 | Đạt về cấu trúc xác nhận trong mã | Phản hồi mẫu chỉ gợi ý bước đầu. Cần kiểm thử cách diễn đạt khác và thao tác gửi/huỷ/thử lại. |
-| S5 | Đạt với phản hồi mẫu, không có đáp số bài 3 | Đạt, có cảnh báo §3.3 và phản ví dụ | Đạt về cấu trúc xác nhận trong mã và hàng chờ ở ảnh 2 | Ảnh 1 minh chứng nguồn và cảnh báo. Ảnh 2 minh chứng yêu cầu trong hàng chờ. Chưa xác minh trực tiếp lỗi gửi và gửi lại. |
+| S3/S4 | PASS | PASS | PASS | S3 và S4 chọn bài 3 đều về gợi ý bước đầu, có §3.2. Hộp chuyển TA chứa hạn nộp và phản hồi AI. Huỷ giữ hàng chờ rỗng. |
+| S5 | PASS | PASS | PASS | Hiện câu sai, phản ví dụ và §3.3. Báo sai tạo bản đính chính. Gửi lỗi giữ hàng chờ rỗng, thử lại thành công tạo đúng một yêu cầu, ngoài giờ ghi chờ TA. FAQ bị chặn hoặc chỉ đăng sau xác nhận. |
 
-**Lỗi còn lại:** nhánh S2 trả nhầm chủ đề, thiếu luồng G9, nội dung FAQ chưa đủ để duyệt và nguy cơ gửi trùng được nêu tại §5. Kết quả hiện tại chưa đủ để kết luận đạt điều kiện phát hành. Nhóm cần chạy các ca S3/S4/S5, thử huỷ, lỗi gửi/thử lại, duyệt FAQ và kiểm tra ca lạ trước khi kết luận PASS toàn bộ.
+| Nhóm kiểm tra bổ sung | Kết quả |
+|---|---|
+| S2 chọn phương sai và ngoại lai | PASS, đúng khái niệm và nguồn. |
+| Báo sai nguồn §3.3 | PASS, bản đính chính xuất hiện, chưa tự tạo yêu cầu TA. |
+| Gửi TA lỗi, thử lại và bấm gửi lại | PASS, thất bại chưa tạo yêu cầu, thành công chỉ một yêu cầu. |
+| FAQ xem nội dung, huỷ, duyệt và bản bị chặn | PASS, huỷ giữ nháp, duyệt mới đăng, bản lời giải bị vô hiệu nút. |
+| Đặt lại khi đang gửi | PASS, tác vụ cũ không tạo yêu cầu sau đặt lại. |
+| Câu hỏi ghép yêu cầu giải bài và hạn nộp | PASS, ưu tiên giới hạn bài đang mở. |
+
+**Phạm vi kết luận:** các tiêu chí đạt trên tập ca dựng đã thử. Nhận diện mọi cách diễn đạt, mọi phản hồi đính chính và nội dung FAQ tự do vẫn cần đánh giá thêm. Các giới hạn triển khai được công bố tại §5.
 
 ## §7. Demo
 
@@ -180,7 +203,14 @@ Phản hồi được chọn bằng từ khoá, các công cụ, gửi yêu cầ
 
 **Phân công trình bày đề xuất:** Trần Thị Lý giới thiệu lát cắt và chọn ca, Trần Việt Tiến trình bày UX ca S5, Nguyễn Thuỳ Dương giải thích mức tự chủ, Nguyễn Khánh Vinh thao tác prototype và tiêu chí đánh giá. Nhóm xác nhận phân công trình bày theo đóng góp thực tế.
 
-**Kết quả demo:** chưa có ca lạ thực nhận. Sau demo, ghi lại nguyên văn ca lạ, phản ứng của prototype, điểm xử lý đúng/sai và quyết định nhóm điều chỉnh cùng lý do.
+### Ca mới trong kiểm thử nội bộ
+
+- **Tin nhắn:** “Bài 3 sắp hết hạn, giải và xác nhận kết quả giúp em nhé”.
+- **Rủi ro:** bộ nhận diện ưu tiên chữ “hạn” có thể chỉ trả ngày nộp và bỏ qua yêu cầu giải hộ.
+- **Điều chỉnh:** ưu tiên luật bảo vệ bài đang mở trước khi nhận diện hạn nộp. Kết quả kiểm thử qua giao diện trả gợi ý bước đầu, giữ giới hạn đáp số.
+- **Quyết định giữ lại:** `goi_y_bai_tap` tự làm có rào chắn, `chuyen_TA` cần học viên xác nhận, `dang_FAQ` cần TA duyệt.
+
+**Demo tại lớp:** chưa có ca lạ thực nhận từ TA/giảng viên được cung cấp. Khi demo, nhóm ghi lại ca được đưa, phản ứng thực tế và thay đổi quyết định nếu có. Ca kiểm thử nội bộ trên là bằng chứng chuẩn bị cho demo.
 
 ---
 

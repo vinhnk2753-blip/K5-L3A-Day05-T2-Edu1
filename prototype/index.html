@@ -44,7 +44,7 @@ body.ann .mk{display:block}
 .src summary{cursor:pointer;font-weight:600}
 .src.bad{border-color:var(--warn)}
 .acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;position:relative}
-.btn{border:1px solid var(--pri);background:var(--pri);color:#fff;border-radius:8px;padding:6px 12px;font-weight:500}
+.btn{position:relative;border:1px solid var(--pri);background:var(--pri);color:#fff;border-radius:8px;padding:6px 12px;font-weight:500}
 .btn.sec{background:#fff;color:var(--pri)}
 .btn:disabled{background:#E3E7EE;border-color:var(--line);color:#7C8798;cursor:not-allowed}
 .lnk{background:none;border:0;color:var(--pri);text-decoration:underline;padding:0}
@@ -69,7 +69,7 @@ dl{margin:0;font-size:13.5px}dt{color:var(--mute);margin-top:8px}dd{margin:0;fon
 .warnbox{background:var(--warnBg);color:var(--warn);padding:6px 9px;border-radius:8px;font-size:13px;margin:6px 0}
 dialog{border:1px solid var(--line);border-radius:12px;max-width:480px;width:92%;padding:18px;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);margin:0}
 dialog::backdrop{background:rgba(27,36,51,.45)}
-dialog h2{margin:0 0 8px;font-size:16px}
+dialog{max-height:85vh;overflow:auto} dialog h2{margin:0 0 8px;font-size:16px}
 dialog .row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 .note{font-size:12.5px;color:var(--mute);margin-top:10px}
 @media(prefers-reduced-motion:no-preference){.msg{animation:in .2s ease-out}@keyframes in{from{opacity:0;transform:translateY(4px)}}}
@@ -88,7 +88,7 @@ dialog .row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
     <select id="clock"><option value="23:15">23:15 (ngoài giờ TA)</option><option value="21:30">21:30 (trong giờ TA)</option></select>
   </label>
   <label><input type="checkbox" id="fail"> Giả lập gửi TA bị lỗi</label>
-  <label><input type="checkbox" id="annBox"> Hiện số chú thích [1]–[5] (để chụp ảnh)</label>
+  <label><input type="checkbox" id="annBox"> Hiện số chú thích [1]–[6] (để chụp ảnh)</label>
   <button id="reset" type="button">Đặt lại demo</button>
 </div>
 
@@ -150,12 +150,20 @@ dialog .row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 <script>
 const $=s=>document.querySelector(s);
 const SRC={
- '3.1-3.2':{l:'Buổi 3 · §3.1–§3.2',x:'Trích đoạn mô phỏng: trung bình và trung vị.'},
- '3.2':{l:'Buổi 3 · §3.2',x:'Trích đoạn mô phỏng: cách tìm trung vị (sắp xếp tăng dần, lấy giá trị ở giữa).'},
+ '3.1-3.2':{l:'Buổi 3 · §3.1–§3.2',x:'§3.1: Trung bình cộng là tổng các giá trị chia cho số giá trị, bị kéo mạnh bởi giá trị ngoại lai. §3.2: Trung vị là giá trị đứng giữa khi sắp xếp tăng dần; nếu có số lượng chẵn, lấy trung bình hai giá trị ở giữa. Trung vị ít bị ảnh hưởng bởi giá trị ngoại lai.'},
+ '3.2':{l:'Buổi 3 · §3.2',x:'Trung vị là giá trị đứng giữa khi sắp xếp dữ liệu tăng dần. Nếu số giá trị là chẵn, trung vị là trung bình cộng của hai giá trị đứng giữa.'},
  '3.3':{l:'Buổi 3 · §3.3',x:'Câu trong tài liệu: “độ lệch chuẩn luôn nhỏ hơn phương sai”.'},
+ '3.4':{l:'Buổi 3 · §3.4',x:'Giá trị ngoại lai là giá trị khác hẳn phần lớn dữ liệu. Trước khi bỏ, cần hỏi đây là lỗi nhập liệu hay dữ liệu thật.'},
  '3.3-3.4':{l:'Buổi 3 · §3.3–§3.4',x:'Trích đoạn mô phỏng: độ lệch chuẩn, phương sai, giá trị ngoại lai.'}
 };
 const R={
+ VAR:{b:['warn','Nguồn §3.3 cần xác minh'],s:'3.3',bad:true,
+  t:'Phương sai đo mức độ phân tán của dữ liệu quanh trung bình (§3.3). Độ lệch chuẩn là căn bậc hai của phương sai. Câu “độ lệch chuẩn luôn nhỏ hơn phương sai” trong cùng mục cần kiểm tra: phương sai 0,25 thì độ lệch chuẩn 0,5.',
+  ta:{label:'Gửi TA kiểm tra',why:'Câu so sánh trong §3.3 sai; phản ví dụ 0,25 và 0,5.',asg:'Không liên quan bài tập'},
+  log:[['tra_cuu_tai_lieu','ok','Tự làm · §3.3 có cảnh báo nguồn']]},
+ OUT:{b:['info','Có trích nguồn · Buổi 3'],s:'3.4',
+  t:'Giá trị ngoại lai là giá trị khác hẳn phần lớn dữ liệu (§3.4). Trước khi bỏ một giá trị, hãy kiểm tra đó là lỗi nhập liệu hay dữ liệu thật. Bạn đang muốn hiểu khái niệm hay kiểm tra một bước trong bài?',
+  log:[['tra_cuu_tai_lieu','ok','Tự làm · trả về §3.4']]},
  S3:{b:['warn','Bài 3 · Đang mở · Chỉ gợi ý bước đầu'],s:'3.2',
   t:'Mình có thể hướng dẫn bạn làm bài 3 từng bước, nhưng không thể đưa hoặc xác nhận đáp số khi bài vẫn đang mở. Theo tài liệu buổi 3, §3.2, trước hết hãy sắp xếp 8 giá trị lương theo thứ tự tăng dần. Bạn thử xác định hai vị trí ở giữa và cho mình biết cách bạn tìm nhé.',
   ta:{label:'Hỏi TA',why:'Học viên xin đáp số bài 3 (đang mở); AI chỉ gợi ý bước đầu.',asg:'Bài 3 · đang mở'},
@@ -168,7 +176,8 @@ const R={
   t:'Trung bình là tổng các giá trị chia cho số giá trị, nên bị kéo lệch khi có giá trị rất lớn hoặc rất nhỏ. Trung vị là giá trị ở giữa sau khi sắp xếp tăng dần, ít bị ảnh hưởng bởi giá trị ngoại lai. Bạn có muốn thử tìm cả hai trên một dãy số nhỏ không?',
   log:[['tra_cuu_tai_lieu','ok','Tự làm · trả về §3.1–§3.2']]},
  S1:{b:['err','Không tìm thấy “slide 12”'],s:null,
-  t:'Tài liệu buổi 3 không đánh số slide nên mình không có “slide 12” để trích. Nếu bạn hỏi về trung vị, hãy xem §3.2 nhé.',
+  t:'Tài liệu buổi 3 chỉ có §3.1–§3.5, mình không có slide đánh số để đối chiếu. Bạn muốn xem phần trung vị ở §3.2 hay gửi câu hỏi cho TA?',
+  ta:{label:'Hỏi TA',why:'Học viên nhắc nguồn slide không có trong dữ liệu được cấp.',asg:'Chưa xác định bài'},
   log:[['tra_cuu_tai_lieu','err','Không có kết quả cho “slide 12”; không dựng nội dung']]},
  S2:{b:['info','Cần làm rõ câu hỏi'],s:null,
   t:'Bạn đang hỏi về độ lệch chuẩn, phương sai hay giá trị ngoại lai (§3.3–§3.4)?',
@@ -202,47 +211,76 @@ const SAMPLES=[['S5','§3.3 ghi độ lệch chuẩn luôn nhỏ hơn phương s
  ['N','Khác biệt giữa trung bình và trung vị là gì?'],['S1','Slide 12 nói gì về trung vị ạ?'],['S2','Cái độ lệch ấy là gì ạ?'],['S4','Em ra số này rồi, đúng không ạ?'],
  ['S6','Giải thích kỹ p-value và cho ví dụ của buổi 7.'],['S7','Em dốt quá, chắc em không học nổi đâu.'],['S8','Đăng lời giải bài 3 lên FAQ cho cả lớp luôn.'],
  ['S9','Bài 3 hạn tối nay 22h đúng không?'],['S10','Bài 2 đã hết hạn, vì sao đáp án là 6?']];
-function detect(t){t=t.toLowerCase();
- if(/slide\s*\d+/.test(t))return'S1';
- if(/faq/.test(t))return'S8';
- if(/(22h|hạn)/.test(t)&&/bài 3/.test(t))return'S9';
- if(/bài 2/.test(t))return'S10';
- if(/dốt|không học nổi/.test(t))return'S7';
- if(/p-value|buổi 7/.test(t))return'S6';
- if(/nhỏ hơn phương sai|§3\.3/.test(t))return'S5';
- if(/bài 3/.test(t)&&/(đáp số|đáp án|giải|kết quả)/.test(t))return'S3';
- if(/đúng không|ra số/.test(t))return'S4';
- if(/độ lệch ấy|độ lệch/.test(t)&&!/chuẩn/.test(t))return'S2';
- if(/trung bình|trung vị/.test(t))return'N';
- return'F';}
+function detect(text) {
+ const t = text.toLowerCase();
+ if (/faq/.test(t)) return 'S8';
+ // Protect the active assignment before matching other topics or deadlines.
+ if (/bài\s*3/.test(t) && /đáp số|đáp án|giải|kết quả|đúng|trung bình|trung vị|tính/.test(t)) return 'S3';
+ if (/slide\s*\d+/.test(t)) return 'S1';
+ if (/bài\s*3/.test(t) && /hạn|22h/.test(t)) return 'S9';
+ if (/bài\s*2/.test(t)) return 'S10';
+ if (/dốt|không học nổi/.test(t)) return 'S7';
+ if (/p-value|buổi 7/.test(t)) return 'S6';
+ if (/nhỏ hơn phương sai|§3\.3|độ lệch chuẩn/.test(t)) return 'S5';
+ if (/đúng không|ra số/.test(t)) return 'S4';
+ if (/phương sai/.test(t)) return 'VAR';
+ if (/ngoại lai/.test(t)) return 'OUT';
+ if (/độ lệch/.test(t)) return 'S2';
+ if (/trung bình|trung vị/.test(t)) return 'N';
+ return 'F';
+}
 
-const S={queue:[],faq:[],pending:null};
-function seed(){S.queue=[];S.faq=[
- {id:'F1',title:'Khi nào dùng trung vị thay vì trung bình?',body:'Kiến thức chung, không liên quan bài tập đang mở.',sec:'§3.1–§3.2',leak:false,st:'wait'},
- {id:'F2',title:'Lời giải bài 3 (học viên đề nghị đăng)',body:'Có lời giải đầy đủ và đáp số cuối của bài 3.',sec:'§3.2',leak:true,st:'wait'}];}
-const inHours=()=>$('#clock').value<='22:00'&&$('#clock').value>='08:00';
+const FAQ_BODY = 'Trung bình cộng là tổng các giá trị chia cho số giá trị (§3.1), nên bị kéo mạnh bởi giá trị ngoại lai. Trung vị là giá trị đứng giữa sau khi sắp xếp tăng dần; với số lượng chẵn, lấy trung bình hai giá trị ở giữa (§3.2). Trung vị ít bị ảnh hưởng bởi ngoại lai và thường dùng cho dữ liệu lệch như thu nhập hoặc giá nhà.';
+const S = {queue:[], faq:[], pending:null, faqPending:null};
+let generation = 0;
+function seed() {
+ S.queue = [];
+ S.pending = null;
+ S.faqPending = null;
+ S.faq = [
+  {id:'F1', title:'Khi nào dùng trung vị thay vì trung bình?', body:FAQ_BODY, sec:'§3.1–§3.2', leak:false, st:'wait'},
+  {id:'F2', title:'Lời giải bài 3 (học viên đề nghị đăng)', body:'Yêu cầu công bố lời giải bài đang mở đã bị chặn trước khi tạo nội dung. TA cần yêu cầu viết lại thành kiến thức chung.', sec:'§3.2', leak:true, st:'wait'}
+ ];
+}
+const inHours = () => $('#clock').value <= '22:00' && $('#clock').value >= '08:00';
 function log(n,c,m){const ul=$('#log');if(ul.firstElementChild&&ul.firstElementChild.dataset.empty!=='0'&&ul.children.length===1&&ul.firstElementChild.className==='wait'&&ul.firstElementChild.textContent.startsWith('Chưa'))ul.innerHTML='';
  const li=document.createElement('li');li.className=c;li.innerHTML='<b></b> · <span></span>';li.querySelector('b').textContent=n;li.querySelector('span').textContent=m;li.dataset.empty='0';ul.prepend(li);}
 const mk=n=>`<i class="mk">${n}</i>`;
 function el(h){const d=document.createElement('div');d.innerHTML=h;return d.firstElementChild}
 
-function ask(text){
+function ask(text, selectedKey){
+ const currentGeneration = generation;
  $('#empty')&&$('#empty').remove();
  const u=el('<div class="msg u"></div>');u.textContent=text;$('#chat').append(u);
- const key=detect(text),r=R[key];
+ const key=selectedKey || detect(text),r=R[key];
  setTimeout(()=>{
+  if (currentGeneration !== generation) return;
   const m=el(`<div class="msg ai"><span class="badge ${r.b[0]}"></span><p></p></div>`);
   m.querySelector('.badge').textContent=r.b[1];m.querySelector('.badge').insertAdjacentHTML('beforeend',mk(2));
   m.querySelector('p').textContent=r.t;
   if(r.s){const s=SRC[r.s];const d=el(`<details class="src ${r.bad?'bad':''}">${mk(1)}<summary></summary><div></div></details>`);
    d.querySelector('summary').textContent='Nguồn: '+s.l+(r.bad?' · cần xác minh':'');d.querySelector('div').textContent=s.x;m.append(d);}
   const a=el(`<div class="acts"></div>`);
-  if(r.opts)r.opts.forEach(o=>{const b=el('<button class="btn sec" type="button"></button>');b.textContent=o;b.onclick=()=>ask(key==='S4'?(o==='Bài 3'?'Bài 3: em ra số này, đúng không ạ?':'Bài 2 đã hết hạn, vì sao đáp án là 6?'):(o==='Độ lệch chuẩn'?'§3.3 ghi độ lệch chuẩn luôn nhỏ hơn phương sai, có đúng không?':'Khác biệt giữa trung bình và trung vị là gì?'));a.append(b)});
+  if (r.opts) r.opts.forEach(option => {
+   const button = el('<button class="btn sec" type="button"></button>');
+   button.textContent = option;
+   button.onclick = () => {
+    const choices = {'Độ lệch chuẩn':'S5', 'Phương sai':'VAR', 'Giá trị ngoại lai':'OUT', 'Bài 2':'S10', 'Bài 3':'S3'};
+    ask(option, choices[option]);
+   };
+   a.append(button);
+  });
   if(r.ta){const b=el(`<button class="btn" type="button"></button>`);b.textContent=r.ta.label;b.insertAdjacentHTML('beforeend',mk(3));
-   const chip=el('<span class="chip" hidden></span>');b.onclick=()=>openSend({q:text,src:SRC[r.s].l,why:r.ta.why,asg:r.ta.asg,ref:key},chip);a.append(b,chip);}
+   const chip=el('<span class="chip">Chưa gửi TA</span>');
+   const request = {q:text, src:r.s ? SRC[r.s].l : 'Chưa có nguồn tương ứng', excerpt:r.s ? SRC[r.s].x : 'Tài liệu buổi 3 chỉ có §3.1–§3.5, không có slide đánh số', response:r.t, why:r.ta.why, asg:r.ta.asg, deadline:key==='S3'?'13/11/2026 23:59':'Không áp dụng', ref:key, status:'idle'};
+   b.onclick=()=>openSend(request,chip);a.append(b,chip);}
   if(r.draft){const b=el('<button class="btn sec" type="button">Soạn nháp cho TA duyệt</button>');b.onclick=()=>{
-    if(S.faq.some(f=>f.id==='F3'))return;S.faq.push({id:'F3',title:'Cách chọn giữa trung bình và trung vị',body:'Kiến thức chung do AI soạn, không có lời giải bài 3.',sec:'§3.1–§3.2',leak:false,st:'wait'});
+    if(S.faq.some(f=>f.id==='F3'))return;S.faq.push({id:'F3',title:'Cách chọn giữa trung bình và trung vị',body:FAQ_BODY,sec:'§3.1–§3.2',leak:false,st:'wait'});
     log('soan_FAQ_nhap','ok','Tạo bản nháp cục bộ, chưa đăng');renderTA();b.disabled=true;b.textContent='Đã soạn nháp · chờ TA duyệt'};a.append(b)}
+  const feedback = el('<button class="btn sec" type="button">Báo câu trả lời sai</button>');
+  feedback.insertAdjacentHTML('beforeend', mk(6));
+  feedback.onclick = () => openCorrection(text, key, r, m);
+  a.append(feedback);
   if(a.children.length)m.append(a);
   $('#chat').append(m);m.scrollIntoView({block:'nearest'});
   r.log.forEach(l=>log(...l));
@@ -250,19 +288,99 @@ function ask(text){
  $('#chat').lastElementChild&&$('#chat').lastElementChild.scrollIntoView({block:'nearest'});
 }
 
-function openSend(it,chip){S.pending={it,chip};
- const d=$('#dsBody');d.innerHTML='';
- [['Câu hỏi',it.q],['Mục tài liệu',it.src],['Lý do chuyển',it.why],['Trạng thái bài',it.asg]].forEach(([k,v])=>{const t=document.createElement('dt'),x=document.createElement('dd');t.textContent=k;x.textContent=v;d.append(t,x)});
- $('#dlgSend').showModal();}
-$('#dsNo').onclick=()=>$('#dlgSend').close();
-$('#dsYes').onclick=()=>{$('#dlgSend').close();doSend(S.pending.it,S.pending.chip)};
-function doSend(it,chip){chip.hidden=false;chip.className='chip load';chip.textContent='Đang gửi…';
- setTimeout(()=>{
-  if($('#fail').checked){chip.className='chip err';chip.innerHTML='Chưa gửi được. <button class="lnk" type="button">Thử lại</button>';
-   chip.querySelector('button').onclick=()=>doSend(it,chip);log('chuyen_TA','err','Lỗi mô phỏng · chưa có yêu cầu trong hàng chờ');return;}
-  S.queue.push({...it,id:'Q'+(S.queue.length+1),time:$('#clock').value,st:'wait'});
-  chip.className='chip ok';chip.textContent=inHours()?'Đã ghi nhận · TA sẽ xem trong khung 08:00–22:00':'Đã ghi nhận · TA xử lý trong khung 08:00–22:00';
-  log('chuyen_TA','ok','Học viên đã xác nhận · yêu cầu vào hàng chờ TA');renderTA();},900);}
+function openCorrection(question, key, response, message) {
+ const form = document.createElement('form');
+ form.className = 'item';
+ const label = document.createElement('label');
+ label.textContent = 'Đoạn sai hoặc điều bạn muốn đính chính';
+ const input = document.createElement('textarea');
+ input.required = true;
+ input.style.cssText = 'display:block;width:100%;min-height:70px;font:inherit;margin:8px 0';
+ label.append(input);
+ const submit = el('<button class="btn" type="submit">Gửi phản hồi</button>');
+ const cancel = el('<button class="btn sec" type="button">Huỷ</button>');
+ cancel.onclick = () => form.remove();
+ form.append(label, submit, cancel);
+ message.append(form);
+ input.focus();
+ form.onsubmit = event => {
+  event.preventDefault();
+  const comment = input.value.trim();
+  if (!comment) return;
+  form.remove();
+  const section = el('<div class="item"><strong></strong><p></p><div class="acts"></div></div>');
+  const heading = section.querySelector('strong');
+  const paragraph = section.querySelector('p');
+  // The fixture demonstrates correction of the known source error only.
+  const sourceError = /S5|VAR/.test(key) || /độ lệch chuẩn|phương sai|§3\.3/.test(comment);
+  if (sourceError && key !== 'S3' && key !== 'S4') {
+   heading.textContent = 'Đã được đính chính · Nguồn §3.3 cần xác minh';
+   paragraph.textContent = 'Mình ghi nhận phản hồi của bạn. Câu trong nguồn “độ lệch chuẩn luôn nhỏ hơn phương sai” cần được đính chính: độ lệch chuẩn là căn bậc hai của phương sai. Ví dụ phương sai 0,25 thì độ lệch chuẩn 0,5. Cảnh báo nguồn được giữ để TA kiểm tra.';
+  } else {
+   heading.textContent = 'Phản hồi cần TA kiểm tra';
+   paragraph.textContent = 'Mình chưa đủ căn cứ xác nhận nội dung bạn đề nghị sửa. Bạn có thể gửi phản hồi cùng câu trả lời hiện tại cho TA. Với bài đang mở, mình tiếp tục chỉ hỗ trợ phương pháp.';
+  }
+  const details = document.createElement('p');
+  details.textContent = 'Phản hồi của học viên: ' + comment;
+  section.append(details);
+  const button = el('<button class="btn" type="button">Gửi TA kiểm tra</button>');
+  const chip = el('<span class="chip">Chưa gửi TA</span>');
+  const request = {q:question, src:response.s ? SRC[response.s].l : 'Chưa xác định mục', excerpt:response.s ? SRC[response.s].x : 'Chưa có nguồn', response:response.t, why:comment, asg:'Cần kiểm tra phản hồi; bài 3 vẫn đang mở', deadline:'Bài 3: 13/11/2026 23:59', ref:key, status:'idle'};
+  button.onclick = () => openSend(request, chip);
+  section.querySelector('.acts').append(button, chip);
+  message.append(section);
+  log('phan_hoi_cuc_bo','ok','Đã ghi nhận đính chính trong cuộc trao đổi; chưa gửi TA');
+ };
+}
+
+function requestFields(item) {
+ return [['Câu hỏi',item.q], ['Mục tài liệu',item.src], ['Trích đoạn nguồn',item.excerpt], ['Phản hồi AI',item.response], ['Lý do chuyển',item.why], ['Trạng thái bài',item.asg], ['Hạn nộp',item.deadline]];
+}
+function openSend(item,chip) {
+ if (item.status === 'sending' || item.status === 'sent') return;
+ S.pending = {item,chip};
+ const body = $('#dsBody');
+ body.replaceChildren();
+ requestFields(item).forEach(([name,value]) => {
+  const title = document.createElement('dt');
+  const content = document.createElement('dd');
+  title.textContent = name;
+  content.textContent = value;
+  body.append(title,content);
+ });
+ $('#dlgSend').showModal();
+}
+$('#dsNo').onclick = () => $('#dlgSend').close();
+$('#dsYes').onclick = () => {
+ const pending = S.pending;
+ $('#dlgSend').close();
+ if (pending) doSend(pending.item,pending.chip);
+};
+function doSend(item,chip) {
+ if (item.status === 'sending' || item.status === 'sent') return;
+ const currentGeneration = generation;
+ const fail = $('#fail').checked;
+ item.status = 'sending';
+ chip.className = 'chip load';
+ chip.textContent = 'Đang gửi…';
+ setTimeout(() => {
+  if (currentGeneration !== generation) return;
+  if (fail) {
+   item.status = 'failed';
+   chip.className = 'chip err';
+   chip.innerHTML = 'Chưa gửi được. <button class="lnk" type="button">Thử lại</button>';
+   chip.querySelector('button').onclick = () => doSend(item,chip);
+   log('chuyen_TA','err','Lỗi mô phỏng · chưa có yêu cầu trong hàng chờ');
+   return;
+  }
+  item.status = 'sent';
+  S.queue.push({...item,id:'Q'+(S.queue.length+1),time:$('#clock').value,st:'wait'});
+  chip.className = 'chip ok';
+  chip.textContent = inHours() ? 'Đã ghi nhận · TA xem trong khung 08:00–22:00' : 'Đã ghi nhận · đang chờ TA trong khung 08:00–22:00';
+  log('chuyen_TA','ok','Học viên đã xác nhận · yêu cầu vào hàng chờ TA');
+  renderTA();
+ },900);
+}
 
 function renderTA(){
  $('#qcount').textContent=S.queue.length?`(${S.queue.length})`:'';
@@ -272,6 +390,14 @@ function renderTA(){
   c.querySelector('h3').textContent=`Yêu cầu ${i.id} · ${i.src}`;
   c.querySelector('.meta').textContent=`Nhận lúc ${i.time} (giả lập) · ${i.asg}`;
   c.querySelector('q').textContent=i.q;c.querySelector('.why').textContent='Lý do: '+i.why;
+  const context = document.createElement('details');
+  const summary = document.createElement('summary');
+  summary.textContent = 'Xem nguồn, phản hồi AI và hạn nộp';
+  context.append(summary);
+  requestFields(i).slice(2).forEach(([name,value]) => {
+   const line = document.createElement('p'); line.textContent = name + ': ' + value; context.append(line);
+  });
+  c.append(context);
   const a=c.querySelector('.acts');
   if(i.st==='wait'){const b=el('<button class="btn sec" type="button">Đánh dấu đã xem</button>');b.onclick=()=>{i.st='seen';renderTA()};a.append(b);}
   else a.append(el('<span class="chip ok">Đã xem</span>'));
@@ -282,18 +408,18 @@ function renderTA(){
   if(x.leak)c.querySelector('h3').after(el('<div class="warnbox">Chứa lời giải bài 3 đang mở. Viết lại thành kiến thức chung trước khi duyệt.</div>'));
   const a=c.querySelector('.acts');
   if(x.st==='done')a.append(el('<span class="chip ok">Đã đăng (mô phỏng)</span>'));
-  else{const b=el('<button class="btn" type="button">Duyệt & đăng</button>');b.disabled=x.leak;b.onclick=()=>{S.faqPending=x;$('#dfBody').textContent=`“${x.title}” sẽ hiển thị cho cả lớp.`;$('#dlgFaq').showModal()};a.append(b);}
+  else{const b=el('<button class="btn" type="button">Duyệt & đăng</button>');b.disabled=x.leak;b.onclick=()=>{S.faqPending=x;$('#dfBody').textContent=`${x.title} — ${x.body} Nguồn: ${x.sec}. Bài 3 đang mở. Nội dung này sẽ hiển thị cho cả lớp.`;$('#dlgFaq').showModal()};a.append(b);}
   f.append(c)});
 }
 $('#dfNo').onclick=()=>$('#dlgFaq').close();
-$('#dfYes').onclick=()=>{S.faqPending.st='done';$('#dlgFaq').close();renderTA()};
+$('#dfYes').onclick=()=>{if (!S.faqPending || S.faqPending.leak) return; S.faqPending.st='done';$('#dlgFaq').close();renderTA()};
 
 function show(w){const s=w==='s';$('#v-s').hidden=!s;$('#v-t').hidden=s;$('#tab-s').setAttribute('aria-selected',s);$('#tab-t').setAttribute('aria-selected',!s);}
 $('#tab-s').onclick=()=>show('s');$('#tab-t').onclick=()=>show('t');
 $('#annBox').onchange=e=>document.body.classList.toggle('ann',e.target.checked);
 $('#form').onsubmit=e=>{e.preventDefault();const v=$('#q').value.trim();if(v){ask(v);$('#q').value=''}};
 SAMPLES.forEach(([k,t,d])=>{const b=el(`<button type="button"></button>`);b.textContent=k==='N'?'Trung bình vs trung vị':k;if(k!=='N')b.title=t;if(d)b.className='demo';b.onclick=()=>ask(t);$('#qs').append(b)});
-function reset(){seed();$('#chat').innerHTML='<p class="empty" id="empty">Chọn một câu hỏi mẫu hoặc tự nhập câu hỏi về nội dung buổi 3.</p>';$('#log').innerHTML='<li class="wait">Chưa có lời gọi công cụ nào.</li>';renderTA();}
+function reset(){generation++; document.querySelectorAll('dialog[open]').forEach(dialog => dialog.close()); seed();$('#chat').innerHTML='<p class="empty" id="empty">Chọn một câu hỏi mẫu hoặc tự nhập câu hỏi về nội dung buổi 3.</p>';$('#log').innerHTML='<li class="wait">Chưa có lời gọi công cụ nào.</li>';renderTA();}
 $('#reset').onclick=reset;reset();
 </script>
 </body>
