@@ -1,15 +1,15 @@
-# Bài nộp LAB5 — T2 Giáo dục · Nhóm [Tên nhóm]
+# Bài nộp LAB5 — T2 · Nhóm Edu1
 
 > **Trạng thái:** Bản thiết kế đề xuất. Cần bổ sung tên nhóm, xác nhận nhóm 4 người với giảng viên, ảnh prototype, kết quả thử thực tế và ca lạ trong demo.
 
 ## Thành viên và phân công
 
-| STT | Họ và tên | Mã học viên | Công việc |
+| STT | Họ và tên | Mã học viên | Việc cần làm |
 |---|---|---|---|
 | 1 | Trần Thị Lý | 2A202603404 | §1–§2: lát cắt, phạm vi, 8 kịch bản và lập luận chọn ca |
-| 2 | Nguyễn Thị Hương Giang | 2A202603538 | §3: thiết kế UX khi AI sai, thông điệp và nguyên tắc HAX/PAIR |
+| 2 | Trần Việt Tiến | 2A202603394 | §3: thiết kế UX khi AI sai, thông điệp và nguyên tắc HAX/PAIR |
 | 3 | Nguyễn Thuỳ Dương | 2A202603388 | §4: mức tự chủ, cost-of-error và kiểm thử quyết định |
-| 4 | Nguyễn Quỳnh Trang | 2A202603477 | §5–§6: prototype, minh chứng và tiêu chí Pass/Fail |
+| 4 | Nguyễn Khánh Vinh | 2A202603390 | §5–§6: prototype, minh chứng và tiêu chí Pass/Fail |
 
 > Phân công trên là **đề xuất** dựa trên danh sách nhóm đã cung cấp trước đây; xác nhận lại thành viên Day 05 và đóng góp thực tế trước khi nộp. Đề chung yêu cầu 3 người/nhóm, cần được giảng viên chấp thuận nếu nộp 4 người.
 
